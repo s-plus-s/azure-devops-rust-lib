@@ -12,3 +12,11 @@ https://learn.microsoft.com/ja-jp/rest/api/azure/devops/wit/work-items/list?view
 ```
 GET https://dev.azure.com/{organization}/{project}/_apis/wit/workitems?ids={ids}&api-version=7.0
 ```
+
+# revisions
+https://learn.microsoft.com/ja-jp/rest/api/azure/devops/wit/revisions/list?view=azure-devops-rest-7.0&tabs=HTTP
+
+
+```
+GET https://dev.azure.com/{organization}/{project}/_apis/wit/workItems/{id}/revisions?api-version=7.0
+```
