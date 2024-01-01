@@ -6,10 +6,11 @@ use serde_json::Value;
 /*
     クエリを指定して、ワークアイテムの一覧を取得する
 */
-pub async fn get(config: &config::Config, query: &str) -> Result<Vec<Value>, Box<dyn std::error::Error>>{
+pub async fn get_work_item_ids(config: &config::Config, query: &str) -> Result<Vec<Value>, Box<dyn std::error::Error>>{
 
     let url = paths::wit::create_url(&config.organization, &config.project, 100000);
     let body = request::post(config, &url, query).await?;
+    println!("{}", body);
     let json: serde_json::Value = serde_json::from_str(&body).unwrap();
     let work_items = json["workItems"].as_array().unwrap();
 
@@ -19,7 +20,7 @@ pub async fn get(config: &config::Config, query: &str) -> Result<Vec<Value>, Box
 /*
     IDを指定して、ワークアイテムの一覧を取得する
 */
-pub async fn get_workitems(config: &config::Config, ids: Vec<u32>) -> Result<Vec<Value>, Box<dyn std::error::Error>>{
+pub async fn get_work_items(config: &config::Config, ids: Vec<u32>) -> Result<Vec<Value>, Box<dyn std::error::Error>>{
 
     let url = paths::wit::create_work_items_url(&config.organization, &config.project, ids);
     let body = request::get(config, &url).await?;
