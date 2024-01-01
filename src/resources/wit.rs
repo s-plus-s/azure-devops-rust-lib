@@ -1,7 +1,6 @@
-use base64::{engine::general_purpose, Engine as _};
 use crate::models::config;
 use crate::paths;
-use reqwest;
+use crate::util::request;
 use serde_json::Value;
 
 /*
@@ -10,16 +9,7 @@ use serde_json::Value;
 pub async fn get(config: &config::Config, query: &str) -> Result<Vec<Value>, Box<dyn std::error::Error>>{
 
     let url = paths::wit::create_url(&config.organization, &config.project, 100000);
-    let client = reqwest::Client::new();
-    let response = client.post(String::from(&url))
-        .header("Authorization", format!("Basic {}", general_purpose::STANDARD.encode(format!(":{}",
-                                                                                              config.pat))))
-        .header("Content-Type", "application/json")
-        .body(query.to_string())
-        .send()
-        .await?;
-
-    let body = response.text().await?;
+    let body = request::post(config, &url, query).await?;
     let json: serde_json::Value = serde_json::from_str(&body).unwrap();
     let work_items = json["workItems"].as_array().unwrap();
 
@@ -32,15 +22,7 @@ pub async fn get(config: &config::Config, query: &str) -> Result<Vec<Value>, Box
 pub async fn get_workitems(config: &config::Config, ids: Vec<u32>) -> Result<Vec<Value>, Box<dyn std::error::Error>>{
 
     let url = paths::wit::create_work_items_url(&config.organization, &config.project, ids);
-    let client = reqwest::Client::new();
-    let response = client.get(String::from(&url))
-        .header("Authorization", format!("Basic {}", general_purpose::STANDARD.encode(format!(":{}",
-                                                                                              config.pat))))
-        .header("Content-Type", "application/json")
-        .send()
-        .await?;
-
-    let body = response.text().await?;
+    let body = request::get(config, &url).await?;
     let json: serde_json::Value = serde_json::from_str(&body).unwrap();
     let work_items = json["value"].as_array().unwrap();
 
@@ -53,15 +35,7 @@ pub async fn get_workitems(config: &config::Config, ids: Vec<u32>) -> Result<Vec
 pub async fn get_workitem_revisions(config: &config::Config, id: u32) -> Result<Vec<Value>, Box<dyn std::error::Error>>{
 
     let url = paths::wit::create_revisions_url(&config.organization, &config.project, id);
-    let client = reqwest::Client::new();
-    let response = client.get(String::from(&url))
-        .header("Authorization", format!("Basic {}", general_purpose::STANDARD.encode(format!(":{}",
-                                                                                              config.pat))))
-        .header("Content-Type", "application/json")
-        .send()
-        .await?;
-
-    let body = response.text().await?;
+    let body = request::get(config, &url).await?;
     let json: serde_json::Value = serde_json::from_str(&body).unwrap();
     let work_items = json["value"].as_array().unwrap();
 
