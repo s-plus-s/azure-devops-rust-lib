@@ -8,3 +8,9 @@ pub fn create_work_items_url(organization: &str, project: &str, ids: Vec<u32>) -
     let request_url = format!("https://dev.azure.com/{}/{}/_apis/wit/workitems?ids={}&api-version=7.0", organization, project, ids_string);
     request_url
 }
+
+pub fn create_revisions_url(organization: &str, project: &str, id: u32) -> String {
+    let id_string = id.to_string();
+    let request_url = format!("https://dev.azure.com/{}/{}/_apis/wit/workitems/{}/revisions?api-version=7.0", organization, project, id_string);
+    request_url
+}
