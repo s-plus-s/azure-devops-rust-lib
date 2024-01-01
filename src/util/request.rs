@@ -17,7 +17,7 @@ pub async fn get(config: &Config, url: &String) -> Result<String, Box<dyn Error>
 
 pub async fn post(config: &Config, url: &String, body: &str) -> Result<String, Box<dyn Error>> {
     let client = reqwest::Client::new();
-    let response = client.get(url)
+    let response = client.post(url)
         .header("Authorization", format!("Basic {}", general_purpose::STANDARD.encode(format!(":{}",
                                                                                               config.pat))))
         .header("Content-Type", "application/json")
