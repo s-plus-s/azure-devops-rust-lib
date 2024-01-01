@@ -1,6 +1,7 @@
 pub mod paths;
 pub mod models;
 pub mod resources;
+mod util;
 
 
 #[cfg(test)]
