@@ -28,6 +28,8 @@ pub fn create_url(
         params.push(("searchCriteria.creatorId", create_id_value.to_string()))
     }
 
+    params.push(("searchCriteria.includeLinks", "true".to_string()));
+
     if let Some(reviewer_id_value) = reviewer_id{
         params.push(("searchCriteria.reviewerId", reviewer_id_value.to_string()))
     }
