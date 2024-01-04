@@ -27,3 +27,45 @@ https://learn.microsoft.com/ja-jp/rest/api/azure/devops/git/pull-requests/get-pu
 ```
 GET https://dev.azure.com/{organization}/{project}/_apis/git/repositories/{repository_id}/pullrequests?api-version=7.0
 ```
+
+# Field
+https://learn.microsoft.com/ja-jp/rest/api/azure/devops/wit/fields/list?view=azure-devops-rest-7.0&tabs=HTTP
+
+```
+GET https://dev.azure.com/{organization}/{project}/_apis/wit/fields?$expand={$expand}&api-version=7.0
+```
+
+# Work Item Type Categoriees
+https://learn.microsoft.com/ja-jp/rest/api/azure/devops/wit/work-item-type-categories/list?view=azure-devops-rest-7.0&tabs=HTTP
+
+```
+GET https://dev.azure.com/{organization}/{project}/_apis/wit/workitemtypecategories?api-version=7.0
+```
+
+# Work Item Types Field
+https://learn.microsoft.com/ja-jp/rest/api/azure/devops/wit/work-item-types-field/list?view=azure-devops-rest-7.0&tabs=HTTP
+
+```
+GET https://dev.azure.com/{organization}/{project}/_apis/wit/workitemtypes/{type}/fields?$expand={$expand}&api-version=7.0
+```
+
+# Work Item Type States
+https://learn.microsoft.com/ja-jp/rest/api/azure/devops/wit/work-item-type-states/list?view=azure-devops-rest-7.0&tabs=HTTP
+
+```
+GET https://dev.azure.com/{organization}/{project}/_apis/wit/workitemtypes/{type}/states?api-version=7.0
+```
+
+# Work Item Types
+https://learn.microsoft.com/ja-jp/rest/api/azure/devops/wit/work-item-types/list?view=azure-devops-rest-7.0&tabs=HTTP
+
+```
+GET https://dev.azure.com/{organization}/{project}/_apis/wit/workitemtypes?api-version=7.0
+```
+
+# Classification Nodes
+https://learn.microsoft.com/ja-jp/rest/api/azure/devops/wit/classification-nodes/get-root-nodes?view=azure-devops-rest-7.0
+
+```
+GET https://dev.azure.com/{organization}/{project}/_apis/wit/classificationnodes?$depth={$depth}&api-version=7.0
+```
