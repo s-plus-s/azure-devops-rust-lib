@@ -19,6 +19,7 @@ pub fn create_revisions_url(organization: &str, project: &str, id: u32) -> Strin
 }
 
 /*
+    /wit/fields
     フィールド一覧を取得する
 */
 pub fn create_fields_url(organization: &str, project: &str) -> String {
@@ -27,7 +28,8 @@ pub fn create_fields_url(organization: &str, project: &str) -> String {
 }
 
 /*
-    ワークアイテムの種類一覧を取得する
+    /wit/workitemtypes
+    WorkItemの種類ごとの項目一覧
 */
 pub fn create_work_item_types_url(organization: &str, project: &str) -> String {
     let request_url = format!("https://dev.azure.com/{}/{}/_apis/wit/workitemtypes?api-version=7.0", organization, project);
@@ -35,7 +37,8 @@ pub fn create_work_item_types_url(organization: &str, project: &str) -> String {
 }
 
 /*
-    ワークアイテムのカテゴリ一覧を取得する
+    /wit/workitemtypecategories
+    WorkItemのカテゴリ一覧を取得する
 */
 pub fn create_work_item_type_categories_url(organization: &str, project: &str) -> String {
     let request_url = format!("https://dev.azure.com/{}/{}/_apis/wit/workitemtypecategories?api-version=7.0", organization, project);
@@ -43,7 +46,8 @@ pub fn create_work_item_type_categories_url(organization: &str, project: &str) -
 }
 
 /*
-    ワークアイテムの種類のフィールド一覧を取得する
+    /wit/workitemtypes/{type}/fields
+    WorkItemのフィールド一覧をBug/Taskなどを指定して取得
 */
 pub fn create_work_item_types_field_url(organization: &str, project: &str, work_item_type: &str) -> String {
     let request_url = format!("https://dev.azure.com/{}/{}/_apis/wit/workitemtypes/{}/fields?$expand=all&api-version=7.0", organization, project, work_item_type);
@@ -51,7 +55,8 @@ pub fn create_work_item_types_field_url(organization: &str, project: &str, work_
 }
 
 /*
-    ワークアイテムの種類の状態一覧を取得する
+    /wit/workitemtypes/{type}/states
+    WorkItemをカテゴリを指定して状態一覧を取得する
 */
 pub fn create_work_item_type_states_url(organization: &str, project: &str, work_item_type: &str) -> String {
     let request_url = format!("https://dev.azure.com/{}/{}/_apis/wit/workitemtypes/{}/states?api-version=7.0", organization, project, work_item_type);
@@ -59,7 +64,8 @@ pub fn create_work_item_type_states_url(organization: &str, project: &str, work_
 }
 
 /*
-    ワークアイテムの種類の状態一覧を取得する
+    wit/classificationnodes
+    WorkItemの選択肢の一覧を取得する
 */
 pub fn create_classification_nodes_url(organization: &str, project: &str, depth: u32) -> String {
     let request_url = format!("https://dev.azure.com/{}/{}/_apis/wit/classificationnodes?$depth={}&api-version=7.0", organization, project, depth);

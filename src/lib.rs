@@ -1,6 +1,8 @@
 pub mod paths;
 pub mod models;
 pub mod resources;
+pub mod data_loader;
+
 mod util;
 
 
