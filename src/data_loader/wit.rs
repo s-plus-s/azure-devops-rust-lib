@@ -14,7 +14,7 @@ pub async fn load_fields(root_path: &String, config: &Config) {
 }
 
 pub async fn load_work_item_types(root_path: &String, config: &Config) {
-    // wit/workitemtypes/{}/fields
+    // wit/workitemtypes
     // ワーク項目タイプ一覧の取得
     let output_path = format!("{}/{}", &root_path, "meta_data");
     fs::create_dir_all(&output_path).await.unwrap();
