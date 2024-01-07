@@ -1,4 +1,5 @@
-use tokio::fs;
+use serde_json::Value;
+use tokio::{fs::{self, File}, time::Instant, io::{AsyncReadExt, AsyncWriteExt}};
 use crate::models::config::Config;
 
 
@@ -58,6 +59,10 @@ pub async fn load_classification_nodes(root_path: &String, config: &Config) {
 }
 
 pub async fn load_work_items(root_path: &String, config: &Config, ids: &Vec<u32>) {
+    // /wit/workitems
+    // この関数の処理時間の計測を開始する
+    let start = Instant::now();
+
     let output_path = format!("{}/{}", &root_path, "work_items");
     fs::create_dir_all(&output_path).await.unwrap();
     
@@ -69,6 +74,12 @@ pub async fn load_work_items(root_path: &String, config: &Config, ids: &Vec<u32>
         let file_path = format!("{}/{}", &output_path, file_name);
         fs::write(file_path, json_text).await.unwrap();
     }
+
+    // この関数の処理時間の計測を終了する
+    let end = Instant::now();
+    println!("load_work_items: {:?}", end.duration_since(start));
+
+    merge_work_items(root_path).await;
 }
 
 pub async fn load_work_items_revisions(root_path: &String, config: &Config, ids: &Vec<u32>) {
@@ -112,16 +123,40 @@ async fn get_work_items(config: &Config, ids: Vec<u32>) -> Vec<String> {
 
         // work_itemsでループ
         for work_item in work_items {
-
-
-            println!("{}", work_item["fields"]["System.Title"].as_str().unwrap());
-
             // Value型からString型に変換する
             let json_text = serde_json::to_string(&work_item).unwrap();
             work_item_json_text_list.push(json_text);
         }
     }
     work_item_json_text_list
+}
+
+pub async fn merge_work_items(root_path: &String) {
+
+    let load_path = format!("{}/{}", &root_path, "work_items");
+
+    let output_path = format!("{}/{}", &root_path, "work_items_all");
+    fs::create_dir_all(&output_path).await.unwrap();
+    let file_path = format!("{}/{}", &output_path, "work_items_all.json");
+
+    let mut work_items: Vec<Value> = Vec::new();
+
+    // data_pathディレクトリ内のjsonファイルをフルパスで取得
+    let mut paths = fs::read_dir(load_path).await.unwrap();
+    while let Some(path) = paths.next_entry().await.unwrap() {
+
+        let file_path = path.path().to_string_lossy().into_owned();
+        let mut file = File::open(file_path).await.unwrap();
+        // ファイルの内容を文字列に読み込みます
+        let mut contents = String::new();
+        file.read_to_string(&mut contents).await.unwrap();
+        let json: Value = serde_json::from_str(&contents).unwrap();
+        work_items.push(json);
+    }
+
+    let mut file = File::create(file_path).await.unwrap();
+    let json_text: String = serde_json::to_string(&work_items).expect("JSON変換に失敗");
+    file.write_all(json_text.as_bytes()).await.unwrap();
 }
 
 async fn get_revisions(config: &Config, ids: Vec<u32>) -> Vec<(u32, String)> {
