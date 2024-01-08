@@ -58,3 +58,27 @@ https://learn.microsoft.com/ja-jp/rest/api/azure/devops/wit/classification-nodes
 ```
 GET https://dev.azure.com/{organization}/{project}/_apis/wit/classificationnodes?$depth={$depth}&api-version=7.0
 ```
+
+# Projects - List
+https://learn.microsoft.com/en-us/rest/api/azure/devops/core/projects/list?view=azure-devops-rest-7.1&tabs=HTTP
+```
+GET https://dev.azure.com/{organization}/_apis/projects?api-version=7.0
+```
+
+# Projects - Get Project Properties
+https://learn.microsoft.com/en-us/rest/api/azure/devops/core/projects/get-project-properties?view=azure-devops-rest-7.1&tabs=HTTP
+```
+GET https://dev.azure.com/{organization}/_apis/projects/{projectId}/properties?api-version=7.1-preview.1
+```
+
+# Processes - List
+https://learn.microsoft.com/en-us/rest/api/azure/devops/core/processes/list?view=azure-devops-rest-7.1
+```
+GET https://dev.azure.com/{organization}/_apis/process/processes?api-version=7.1-preview.1
+```
+
+# Work Item Types - Get
+https://learn.microsoft.com/en-us/rest/api/azure/devops/processes/work-item-types/get?view=azure-devops-rest-7.0&tabs=HTTP
+```
+GET https://dev.azure.com/{organization}/_apis/work/processes/{processId}/workitemtypes/{witRefName}?api-version=7.0
+```
